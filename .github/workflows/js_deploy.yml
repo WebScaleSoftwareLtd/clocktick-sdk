@@ -1,0 +1,21 @@
+name: Deploy JS library
+on:
+    push:
+        branches:
+            - main
+        paths:
+            - "js/**"
+            - ".github/workflows/js_deploy.yml"
+
+jobs:
+    test:
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@v4
+            - uses: oven-sh/setup-bun@v2
+              with:
+                bun-version: latest
+            - name: Publish to npm
+              run: cd js && npm i && npm publish
+              env:
+                NODE_AUTH_TOKEN: ${{ secrets.NPM_AUTH_TOKEN }}

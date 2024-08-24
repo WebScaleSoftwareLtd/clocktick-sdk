@@ -14,7 +14,7 @@
     "license": "MIT",
     "scripts": {
         "build": "tsup",
-        "prepublish": "bun run build"
+        "prepublishOnly": "bun run build"
     },
     "dependencies": {
         "@msgpack/msgpack": "^3.0.0-beta2",
