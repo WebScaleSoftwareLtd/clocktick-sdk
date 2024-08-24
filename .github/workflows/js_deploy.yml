@@ -8,7 +8,7 @@ on:
             - ".github/workflows/js_deploy.yml"
 
 jobs:
-    test:
+    deploy:
         runs-on: ubuntu-24.04
         steps:
             - uses: actions/checkout@v4
