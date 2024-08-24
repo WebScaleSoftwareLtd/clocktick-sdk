@@ -2,9 +2,20 @@
     "name": "clocktick",
     "version": "1.0.0",
     "description": "The SDK for Clocktick.",
+    "exports": {
+        ".": {
+            "require": "./dist/index.js",
+            "import": "./dist/index.mjs"
+        }
+    },
     "main": "dist/index.js",
+    "module": "dist/index.mjs",
     "author": "Web Scale Software Ltd",
     "license": "MIT",
+    "scripts": {
+        "build": "tsup",
+        "prepublish": "bun run build"
+    },
     "dependencies": {
         "@msgpack/msgpack": "^3.0.0-beta2",
         "base64-js": "^1.5.1",
@@ -13,6 +24,7 @@
     "devDependencies": {
         "@noble/ed25519": "^2.1.0",
         "@types/bun": "^1.1.6",
+        "tsup": "^8.2.4",
         "typescript": "^5.5.4"
     }
 }

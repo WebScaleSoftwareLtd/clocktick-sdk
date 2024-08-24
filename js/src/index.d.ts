@@ -1,6 +1,6 @@
 import type { CreateJobProperties } from "./properties";
 import type { internalSym } from "./typed";
-export * from "./properties";
+export { CreateJobProperties, fromDatetime, fromNow } from "./properties";
 
 export class APIError extends Error {
     public readonly type: string;
@@ -15,7 +15,7 @@ type ObjOrFn = { [key: string]: Function | ObjOrFn };
 
 type PatchedRoutes<T> = {
     [K in keyof T]: T[K] extends Function ? TransformFunction<T[K]> :
-        T[K] extends ObjOrFn ? PatchedRoutes<T[K]> : never;
+    T[K] extends ObjOrFn ? PatchedRoutes<T[K]> : never;
 } & { [internalSym]: any };
 
 export function httpRoute<T extends ObjOrFn>(router: PatchedRoutes<T>):
