@@ -1,0 +1,17 @@
+name: Run JS tests
+on:
+    push:
+        paths:
+            - "js/**"
+            - ".github/workflows/js_test.yml"
+
+jobs:
+    test:
+        runs-on: ubuntu-24.04
+        steps:
+            - uses: actions/checkout@v4
+            - uses: oven-sh/setup-bun@v2
+              with:
+                bun-version: latest
+            - name: Install dependencies
+              run: cd js && bun install --frozen-lockfile && bun test --coverage
