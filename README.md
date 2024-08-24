@@ -2,4 +2,4 @@
 
 The SDK for Clocktick within various different languages. The following languages are supported:
 
-- [TS/JS SDK](./js)
+- [JS/TS SDK](./js)
