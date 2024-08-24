@@ -13,5 +13,5 @@ jobs:
             - uses: oven-sh/setup-bun@v2
               with:
                 bun-version: latest
-            - name: Install dependencies
+            - name: Install dependencies and run tests
               run: cd js && bun install --frozen-lockfile && bun test --coverage
