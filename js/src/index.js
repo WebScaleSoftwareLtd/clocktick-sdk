@@ -99,7 +99,7 @@ export async function deleteJob(apiKey, jobId) {
         throw new Error("Invalid job ID.");
     }
 
-    const url = `https://clocktick.io/api/v1/jobs/${encodeURIComponent(jobId)}`;
+    const url = `https://clocktick.dev/api/v1/jobs/${encodeURIComponent(jobId)}`;
     await errorHandledFetch(url, apiKey, "DELETE");
 }
 
@@ -113,7 +113,7 @@ function apiHandlerBuilder(apiKey, encryptionKey, jobType, endpoint) {
     return async (props, ...args) => {
         const key = await encryptionKey;
         const obj = props.toObject();
-        let url = "https://clocktick.io/api/v1/jobs";
+        let url = "https://clocktick.dev/api/v1/jobs";
         if (obj.id !== null && obj.id !== "") {
             url += `/${encodeURIComponent(obj.id)}`;
         }

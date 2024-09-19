@@ -1,4 +1,4 @@
-module go.clocktick.io/sdk
+module go.clocktick.dev/sdk
 
 go 1.20
 

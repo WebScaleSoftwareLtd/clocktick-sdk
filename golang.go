@@ -429,7 +429,7 @@ func sendRequest(
 	return RequestError{Status: resp.StatusCode, Request: req}
 }
 
-const jobsEndpoint = "https://clocktick.io/api/v1/jobs"
+const jobsEndpoint = "https://clocktick.dev/api/v1/jobs"
 
 // ScheduleJob is used to schedule a job in the server.
 func (s *Server) ScheduleJob(

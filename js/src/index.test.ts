@@ -39,7 +39,7 @@ async function patchFetchCalls<T>(
 
 const id = "%%%&@";
 const idEnc = encodeURIComponent(id);
-const specificJobUrl = `https://clocktick.io/api/v1/jobs/${idEnc}`;
+const specificJobUrl = `https://clocktick.dev/api/v1/jobs/${idEnc}`;
 
 describe("deleteJob", () => {
     test("errors if no job ID", async () => {
@@ -100,7 +100,7 @@ describe("deleteJob", () => {
 
             // Check the fetch calls.
             expect(fetchCalls).toEqual([
-                [`https://clocktick.io/api/v1/jobs/id`, {
+                [`https://clocktick.dev/api/v1/jobs/id`, {
                     method: "DELETE",
                     headers: {
                         Authorization: "Bearer key",
@@ -132,7 +132,7 @@ describe("deleteJob", () => {
             }
 
             expect(fetchCalls).toEqual([
-                [`https://clocktick.io/api/v1/jobs/id`, {
+                [`https://clocktick.dev/api/v1/jobs/id`, {
                     method: "DELETE",
                     headers: {
                         Authorization: "Bearer key",
@@ -226,7 +226,7 @@ describe("createRouter", () => {
             resp(), () => router.test3(fromWithDefaultId, true, "d"), fetchCalls,
         ));
 
-        const defaultUrl = "https://clocktick.io/api/v1/jobs";
+        const defaultUrl = "https://clocktick.dev/api/v1/jobs";
         expect(fetchCalls).toEqual([
             fetchReq(specificJobUrl, {
                 start_from: {
@@ -313,7 +313,7 @@ describe("createRouter", () => {
             resp(), () => router.test2.test4(from, "a"), fetchCalls,
         ));
 
-        const defaultUrl = "https://clocktick.io/api/v1/jobs";
+        const defaultUrl = "https://clocktick.dev/api/v1/jobs";
         expect(fetchCalls).toEqual([
             fetchReq(defaultUrl, {
                 start_from: {
