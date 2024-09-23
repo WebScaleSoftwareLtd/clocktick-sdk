@@ -19,10 +19,9 @@
     "dependencies": {
         "@msgpack/msgpack": "^3.0.0-beta2",
         "base64-js": "^1.5.1",
-        "discord-verify": "^1.2.0"
+        "@noble/ed25519": "^2.1.0"
     },
     "devDependencies": {
-        "@noble/ed25519": "^2.1.0",
         "@types/bun": "^1.1.6",
         "tsup": "^8.2.4",
         "typescript": "^5.5.4"

@@ -1,5 +1,5 @@
 import { encode, decode } from "@msgpack/msgpack";
-import { isValidRequest } from "discord-verify";
+import { verifyAsync } from "@noble/ed25519";
 import {
     internalSym, fixedIv, toBase64Polyfill, fromBase64,
 } from "./typed";
@@ -24,18 +24,50 @@ async function decrypt(key, data) {
     return new Uint8Array(decrypted);
 }
 
+function fromHex(hex) {
+    const bytes = new Uint8Array(hex.match(/.{1,2}/g).map((byte) => parseInt(byte, 16)));
+    return bytes;
+}
+
+// Function to verify Ed25519 signature
+async function verifySignature(publicKey, message, signature) {
+    const publicKeyBytes = fromHex(publicKey);
+    const messageBytes = new TextEncoder().encode(message);
+    const signatureBytes = fromHex(signature);
+    try {
+        return await verifyAsync(signatureBytes, messageBytes, publicKeyBytes);
+    } catch {
+        return false;
+    }
+}
+
 export function httpRoute(router) {
     const [fns, encryptionKey, publicKey] = router[internalSym];
     return async (req) => {
-        // Verify the signature. We use discord-verify here because it is quite battle-tested and
-        // we use the same verification method as the Discord API.
-        const isValid = await isValidRequest(req, publicKey);
-        if (!isValid) {
-            return new Response("Unauthorized", { status: 401 });
+        // Verify the signature.
+        const signature = req.headers.get("X-Signature-Ed25519");
+        const timestamp = req.headers.get("X-Signature-Timestamp");
+        const body = await req.text();
+        const message = timestamp + body;
+
+        // Validate the timestamp
+        const currentTime = Math.floor(Date.now() / 1000);
+        const requestTime = parseInt(timestamp, 10);
+        const timeDifference = currentTime - requestTime;
+        const MAX_TIME_DIFF = 300; // 5 minutes
+
+        // Return here if the request is too old.
+        if (timeDifference > MAX_TIME_DIFF) {
+            return new Response("Bad Request - too old", { status: 401 });
+        }
+
+        // Verify the signature.
+        if (!await verifySignature(publicKey, message, signature)) {
+            return new Response("Bad Request - invalid signature", { status: 401 });
         }
 
         // Decode the request body.
-        const { type, encrypted_data } = await req.json();
+        const { type, encrypted_data } = JSON.parse(body);
         let data;
         try {
             data = decode(await decrypt(await encryptionKey, encrypted_data));
