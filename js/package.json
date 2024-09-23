@@ -1,5 +1,5 @@
 {
-    "name": "clocktick",
+    "name": "@clocktick/sdk",
     "version": "1.0.0",
     "description": "The SDK for Clocktick.",
     "exports": {
